@@ -1,0 +1,102 @@
+{
+  "settings": {
+    "number_of_shards" : 1,
+    "max_ngram_diff":  99,
+    "max_shingle_diff": 99,
+    "analysis": {
+      "analyzer": {
+        "brand_analyzer": {
+          "tokenizer": "whitespace",
+          "filter": [
+            "lowercase",
+            "trim"
+          ]
+        },
+        "catalog_analyzer": {
+          "tokenizer": "whitespace",
+          "filter": [
+            "lowercase"
+          ]
+        },
+        "article_analyzer": {
+          "tokenizer": "articule_tokenizer",
+          "filter": [
+            "lowercase"
+          ]
+        }
+      },
+      "tokenizer": {
+        "catalog_tokenizer": {
+          "type": "ngram",
+          "min_gram": 4,
+          "max_gram": 32,
+          "token_chars": [
+            "letter",
+            "digit"
+          ]
+        },
+        "articule_tokenizer": {
+          "type": "ngram",
+          "min_gram": 3,
+          "max_gram": 24
+        },
+        "brand_tokenizer": {
+          "type": "ngram",
+          "min_gram": 2,
+          "max_gram": 12,
+          "token_chars": [
+            "letter",
+            "digit"
+          ]
+        },
+        "nodes_tokenizer": {
+          "type": "path_hierarchy",
+          "delimiter": "\\",
+          "replacement": "/"
+        },
+        "path_tokenizer": {
+          "type": "path_hierarchy",
+          "delimiter": "\\",
+          "replacement": "/"
+        }
+      }
+    }
+  },
+  "mappings": {
+    "properties": {
+      "uuid": {
+        "type": "text"
+      },
+      "article": {
+        "type": "text",
+        "analyzer": "article_analyzer",
+        "fielddata": true,
+        "fields": {
+          "raw": {
+            "type": "keyword"
+          }
+        }
+      },
+      "brand": {
+        "type": "text",
+        "fielddata": true,
+        "analyzer": "brand_analyzer",
+        "fields": {
+          "raw": {
+            "type": "keyword"
+          }
+        }
+      },
+      "name": {
+        "type": "text",
+        "fielddata": true,
+        "analyzer": "catalog_analyzer",
+        "fields": {
+          "raw": {
+            "type": "keyword"
+          }
+        }
+      }
+    }
+  }
+}
