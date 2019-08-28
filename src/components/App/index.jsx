@@ -15,7 +15,7 @@ export class App extends Component {
         {
           ({ loading, error, data }) => (
             loading 
-              ? (<>Loading...</>) 
+              ? (<>Data not found...</>) 
               : (
                 <ul>{
                   data.products && _.map(data.products, (item, i) =>{
